@@ -3,7 +3,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import jsPDF from 'jspdf';
 
-const calendarData = {
+interface CalendarEvent {
+  date: string;
+  day: string;
+  particulars: string;
+}
+
+type CalendarSection = 'primary' | 'middle' | 'high' | 'higherSecondary';
+
+const calendarData: Record<CalendarSection, CalendarEvent[]> = {
   primary: [
     { date: '07.04.2025', day: 'Monday', particulars: 'School Re-Opens for 2025-2026' },
     { date: '10.04.2025', day: 'Thursday', particulars: 'Mahavir Jayanti (Holiday)' },
@@ -175,30 +183,34 @@ const initialFormData = {
   healthIssues: ''
 };
 
-const AdmissionsPage = ({ onBack }) => {
+interface PageProps {
+  onBack: () => void;
+}
+
+const AdmissionsPage = ({ onBack }: PageProps) => {
   const [admissionView, setAdmissionView] = useState('main'); // 'main', 'guidelines', 'online-form', 'fee-structure'
   const [formData, setFormData] = useState(initialFormData);
-  const [submittedData, setSubmittedData] = useState(null);
+  const [submittedData, setSubmittedData] = useState<{ id: string; name: string } | null>(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const uniqueId = `BMS-${Date.now()}`;
     setSubmittedData({ id: uniqueId, name: formData.studentName });
     setFormData(initialFormData); // Reset form
   };
 
-  const handleOnlineApplyClick = (e) => {
+  const handleOnlineApplyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setAdmissionView('online-form');
     setSubmittedData(null); // Reset submission state when opening form
   };
   
-  const handleProspectusDownload = (e) => {
+  const handleProspectusDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height;
@@ -206,13 +218,13 @@ const AdmissionsPage = ({ onBack }) => {
     const margin = 15;
     let y = 20;
 
-    const addWrappedText = (text) => {
+    const addWrappedText = (text: string) => {
         const lines = doc.splitTextToSize(text, pageWidth - (margin * 2));
         doc.text(lines, margin, y);
         y += (lines.length * 5) + 3; // Adjust spacing after paragraph
     };
     
-    const addSectionTitle = (title) => {
+    const addSectionTitle = (title: string) => {
         if (y > pageHeight - 30) { doc.addPage(); y = 20; }
         y += 5;
         doc.setFont('helvetica', 'bold');
@@ -565,7 +577,7 @@ const AdmissionsPage = ({ onBack }) => {
   );
 };
 
-const FacultyPage = ({ onBack }) => {
+const FacultyPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
@@ -589,7 +601,7 @@ const FacultyPage = ({ onBack }) => {
   );
 };
 
-const FacilitiesPage = ({ onBack }) => {
+const FacilitiesPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
@@ -614,7 +626,7 @@ const FacilitiesPage = ({ onBack }) => {
   );
 };
 
-const FeePaymentPage = ({ onBack }) => {
+const FeePaymentPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
@@ -674,8 +686,8 @@ const FeePaymentPage = ({ onBack }) => {
   );
 };
 
-const AcademicsPage = ({ onBack }) => {
-  const [activeCalendarTab, setActiveCalendarTab] = useState('primary');
+const AcademicsPage = ({ onBack }: PageProps) => {
+  const [activeCalendarTab, setActiveCalendarTab] = useState<CalendarSection>('primary');
 
   return (
     <main className="site-main admissions-page">
@@ -733,7 +745,7 @@ const AcademicsPage = ({ onBack }) => {
 };
 
 
-const AboutUsPage = ({ onBack }) => {
+const AboutUsPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
@@ -795,7 +807,7 @@ const AboutUsPage = ({ onBack }) => {
   );
 };
 
-const StudentSuppliesPage = ({ onBack }) => {
+const StudentSuppliesPage = ({ onBack }: PageProps) => {
   const supplyItems = [
     {
       id: 1,
@@ -881,12 +893,12 @@ const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const [isCalendarModalOpen, setCalendarModalOpen] = useState(false);
-  const [activeCalendarTab, setActiveCalendarTab] = useState('primary');
+  const [activeCalendarTab, setActiveCalendarTab] = useState<CalendarSection>('primary');
   const [currentPage, setCurrentPage] = useState('home');
 
   const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-');
   
-  const openCalendarModal = (e) => {
+  const openCalendarModal = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setCalendarModalOpen(true);
   };
@@ -922,7 +934,7 @@ const App = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    const handleEsc = (event) => {
+    const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closeCalendarModal();
       }
@@ -936,7 +948,7 @@ const App = () => {
 
 
   const renderNavLinks = (isFooter = false) => {
-    const pageItems = {
+    const pageItems: { [key: string]: string } = {
       'About': 'about-us',
       'Academics': 'academics',
       'Admissions': 'admissions',
@@ -959,7 +971,7 @@ const App = () => {
           </li>
         );
       } else {
-        const handleScrollLinkClick = (e) => {
+        const handleScrollLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
           if (currentPage !== 'home') {
             e.preventDefault();
             setCurrentPage('home');
