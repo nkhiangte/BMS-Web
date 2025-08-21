@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import jsPDF from 'jspdf';
@@ -947,7 +946,7 @@ const App = () => {
   }, []);
 
 
-  const renderNavLinks = (isFooter = false) => {
+  const renderNavLinks = (items: string[], isFooter = false) => {
     const pageItems: { [key: string]: string } = {
       'About': 'about-us',
       'Academics': 'academics',
@@ -958,7 +957,7 @@ const App = () => {
       'Supplies': 'student-supplies',
     };
 
-    return navItems.map(item => {
+    return items.map(item => {
       const slug = slugify(item);
       const pageName = pageItems[item];
 
@@ -1090,7 +1089,10 @@ const App = () => {
         </a>
         <nav className="main-nav" aria-label="Main navigation">
           <ul>
-            {renderNavLinks()}
+            {renderNavLinks(navItems.slice(0, 6))}
+          </ul>
+          <ul>
+            {renderNavLinks(navItems.slice(6))}
           </ul>
         </nav>
         <div className="search-icon" aria-label="Search" role="button" tabIndex={0}>
@@ -1147,7 +1149,7 @@ const App = () => {
             <div className="footer-links">
                 <h5>Quick Links</h5>
                 <ul>
-                    {renderNavLinks(true)}
+                    {renderNavLinks(navItems, true)}
                 </ul>
             </div>
             <div className="footer-contact">
@@ -1279,6 +1281,11 @@ const styles = `
     list-style: none;
     display: flex;
     gap: 28px;
+    justify-content: center;
+  }
+  
+  .main-nav ul:not(:last-child) {
+    margin-bottom: 8px;
   }
 
   .main-nav a {
@@ -2138,7 +2145,6 @@ const styles = `
       width: 100%;
     }
     .main-nav ul {
-      justify-content: center;
       flex-wrap: wrap;
       gap: 16px 24px;
     }
