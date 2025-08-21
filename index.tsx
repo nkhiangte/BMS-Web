@@ -226,17 +226,17 @@ const AdmissionsPage = ({ onBack }) => {
     // Title
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(16);
-    doc.text('Bethel Mission School, Champhai — Prospectus (2025)', pageWidth / 2, y, null, null, 'center');
+    doc.text('Bethel Mission School, Champhai — Prospectus (2025)', pageWidth / 2, y, { align: 'center' });
     y += 12;
 
     // Sub-details
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     doc.text('Established: 1996', margin, y);
-    doc.text('Principal: K Malsawmdawngi', pageWidth / 2, y, null, null, 'center');
-    doc.text('Affiliation: Mizoram Board of School Education (MBSE)', pageWidth - margin, y, null, null, 'right');
+    doc.text('Principal: K Malsawmdawngi', pageWidth / 2, y, { align: 'center' });
+    doc.text('Affiliation: Mizoram Board of School Education (MBSE)', pageWidth - margin, y, { align: 'right' });
     y+=5;
-    doc.text('Management: Private, Unaided', pageWidth - margin, y, null, null, 'right');
+    doc.text('Management: Private, Unaided', pageWidth - margin, y, { align: 'right' });
     y += 10;
     
     // Vision
@@ -445,7 +445,7 @@ const AdmissionsPage = ({ onBack }) => {
             </div>
             <div className="form-group">
               <label htmlFor="aadhaar">Aadhaar No.</label>
-              <input type="text" id="aadhaar" name="aadhaar" pattern="\d{12}" title="12 digit Aadhaar number" value={formData.aadhaar} onChange={handleInputChange} required />
+              <input type="text" id="aadhaar" name="aadhaar" pattern="\\d{12}" title="12 digit Aadhaar number" value={formData.aadhaar} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
               <label htmlFor="fatherName">Father’s Name</label>
@@ -461,7 +461,7 @@ const AdmissionsPage = ({ onBack }) => {
             </div>
             <div className="form-group">
               <label htmlFor="parentAadhaar">Mother/Father Aadhaar No.</label>
-              <input type="text" id="parentAadhaar" name="parentAadhaar" pattern="\d{12}" title="12 digit Aadhaar number" value={formData.parentAadhaar} onChange={handleInputChange} required />
+              <input type="text" id="parentAadhaar" name="parentAadhaar" pattern="\\d{12}" title="12 digit Aadhaar number" value={formData.parentAadhaar} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
               <label htmlFor="guardianName">Guardian’s Name (if different)</label>
@@ -884,7 +884,7 @@ const App = () => {
   const [activeCalendarTab, setActiveCalendarTab] = useState('primary');
   const [currentPage, setCurrentPage] = useState('home');
 
-  const slugify = (text) => text.toLowerCase().replace(/\s+/g, '-');
+  const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-');
   
   const openCalendarModal = (e) => {
     e.preventDefault();
