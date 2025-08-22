@@ -1119,9 +1119,11 @@ const App = () => {
 
   return (
     <div className="container">
-      <div className="banner-container">
-        <img src="https://i.postimg.cc/vmS6DnyK/IMG-4967.jpg" alt="Bethel Mission School Group Photo" className="banner-image" />
-      </div>
+      {currentPage === 'home' && (
+        <div className="banner-container">
+          <img src="https://i.postimg.cc/vmS6DnyK/IMG-4967.jpg" alt="Bethel Mission School Group Photo" className="banner-image" />
+        </div>
+      )}
       
       <header className="site-header">
         <a href="#" className="logo-container" onClick={(e) => { e.preventDefault(); setCurrentPage('home'); }}>
