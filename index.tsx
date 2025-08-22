@@ -933,6 +933,56 @@ const StudentSuppliesPage = ({ onBack }: PageProps) => {
   );
 };
 
+const StudentLifePage = ({ onBack }: PageProps) => {
+  return (
+    <main className="site-main admissions-page">
+      <div className="page-nav-buttons">
+        <button onClick={onBack} className="back-button">
+          &larr; Back
+        </button>
+        <button onClick={onBack} className="home-button">
+          Home
+        </button>
+      </div>
+      <h2 className="page-title">Student Life</h2>
+      
+      <section id="clubs-societies" className="card admission-details">
+        <h3>🌱 Clubs & Societies</h3>
+        
+        <h4>🌿 Eco Club</h4>
+        <p>Our Eco Club inspires students to care for the planet through tree plantation drives, clean-up campaigns, waste-reduction projects, and awareness rallies. Students actively engage in both school and community projects to promote sustainable living.</p>
+
+        <h4>🎖️ NCC (National Cadet Corps)</h4>
+        <p>The NCC unit was established in 2021 at Bethel Mission School.</p>
+        <ul className="guidelines-list">
+          <li>Cadets learn discipline, teamwork, and leadership through regular drills and community service.</li>
+          <li>They have successfully completed two 10-day training camps — in 2022 and 2025.</li>
+          <li>NCC gives our students opportunities to grow in confidence and represent the school in civic activities and adventure training.</li>
+        </ul>
+
+        <h4>🔬 Science Club</h4>
+        <p>Our Science Club nurtures curiosity, creativity, and innovation. Over the years, it has built a proud record of achievements at district, state, and national platforms.</p>
+        <h5>Highlights of Achievements:</h5>
+        <ul className="guidelines-list">
+            <li>Children’s Science Congress – District & State participation 14 times; represented Mizoram at the National level 5 times.</li>
+            <li>State Science, Mathematics & Environment Exhibition – Won State Award 5 times; represented Mizoram at the JNSMEE, Bhopal (2017).</li>
+            <li>INSPIRE Award – MANAK – Received incentive awards 5 times; represented at New Delhi 3 times, with one upcoming participation.</li>
+        </ul>
+      </section>
+
+      <section id="sports-arts" className="card" style={{ marginTop: '32px' }}>
+          <h3>Sports & Arts</h3>
+          <p>Information about sports teams, arts programs, and annual events will be available here soon.</p>
+      </section>
+
+      <section id="student-council" className="card" style={{ marginTop: '32px' }}>
+          <h3>Student Council</h3>
+          <p>Details about our student leadership body and their activities will be updated shortly.</p>
+      </section>
+    </main>
+  );
+};
+
 
 const App = () => {
   const navItems = ['Home', 'About', 'Academics', 'Admissions', 'Fees', 'Student Life', 'Facilities', 'Faculty', 'Supplies', 'Contact'];
@@ -1002,6 +1052,7 @@ const App = () => {
       'Facilities': 'facilities',
       'Fees': 'fee-payment',
       'Supplies': 'student-supplies',
+      'Student Life': 'student-life',
     };
 
     return items.map(item => {
@@ -1053,6 +1104,8 @@ const App = () => {
         return <FeePaymentPage onBack={() => setCurrentPage('home')} />;
       case 'student-supplies':
         return <StudentSuppliesPage onBack={() => setCurrentPage('home')} />;
+      case 'student-life':
+        return <StudentLifePage onBack={() => setCurrentPage('home')} />;
       default:
         return (
            <main className="site-main">
@@ -1105,11 +1158,8 @@ const App = () => {
                 </article>
                 <article id="student-life" ref={el => { sectionsRef.current['student-life'] = el; }} className="card">
                   <h3>Student Life</h3>
-                  <ul>
-                    <li><a href="#">Clubs & Societies</a></li>
-                    <li><a href="#">Sports & Arts</a></li>
-                    <li><a href="#">Student Council</a></li>
-                  </ul>
+                  <p>Explore our vibrant student life, including clubs, sports, and leadership opportunities that help students grow beyond the classroom.</p>
+                  <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('student-life'); window.scrollTo(0, 0); }} className="read-more" style={{display: 'block', marginBottom: '24px'}}>Discover Student Life &raquo;</a>
                 </article>
               </section>
           </main>
@@ -1753,6 +1803,13 @@ const styles = `
     margin: 24px 0 12px;
     padding-bottom: 4px;
     border-bottom: 1px solid var(--border-color);
+  }
+
+  .admission-details h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 24px 0 12px;
   }
   
   .admission-header {
