@@ -190,18 +190,57 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
   const [admissionView, setAdmissionView] = useState('main'); // 'main', 'guidelines', 'online-form', 'fee-structure'
   const [formData, setFormData] = useState(initialFormData);
   const [submittedData, setSubmittedData] = useState<{ id: string; name: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const uniqueId = `BMS-${Date.now()}`;
-    setSubmittedData({ id: uniqueId, name: formData.studentName });
-    setFormData(initialFormData); // Reset form
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    // IMPORTANT: Replace with your own Access Key from web3forms.com
+    const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+
+    const payload = {
+      ...formData,
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `New Admission Application from ${formData.studentName}`,
+      from_name: "Bethel Mission School Website",
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        const uniqueId = `BMS-${Date.now()}`;
+        setSubmittedData({ id: uniqueId, name: formData.studentName });
+        setFormData(initialFormData); // Reset form
+      } else {
+        console.error("Submission failed:", result);
+        setSubmitError(result.message || "An unknown error occurred. Please try again.");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      setSubmitError("Failed to connect. Please check your internet connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   const handleOnlineApplyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -456,7 +495,7 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
             </div>
             <div className="form-group">
               <label htmlFor="aadhaar">Aadhaar No.</label>
-              <input type="text" id="aadhaar" name="aadhaar" pattern="\\d{12}" title="12 digit Aadhaar number" value={formData.aadhaar} onChange={handleInputChange} required />
+              <input type="tel" inputMode="numeric" id="aadhaar" name="aadhaar" pattern="[0-9]{12}" title="Enter a 12-digit Aadhaar number without spaces" value={formData.aadhaar} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
               <label htmlFor="fatherName">Father’s Name</label>
@@ -472,7 +511,7 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
             </div>
             <div className="form-group">
               <label htmlFor="parentAadhaar">Mother/Father Aadhaar No.</label>
-              <input type="text" id="parentAadhaar" name="parentAadhaar" pattern="\\d{12}" title="12 digit Aadhaar number" value={formData.parentAadhaar} onChange={handleInputChange} required />
+              <input type="tel" inputMode="numeric" id="parentAadhaar" name="parentAadhaar" pattern="[0-9]{12}" title="Enter a 12-digit Aadhaar number without spaces" value={formData.parentAadhaar} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
               <label htmlFor="guardianName">Guardian’s Name (if different)</label>
@@ -540,8 +579,16 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
               <textarea id="healthIssues" name="healthIssues" value={formData.healthIssues} onChange={handleInputChange}></textarea>
             </div>
           </div>
-          <button type="submit">Submit Application</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Submit Application'}
+          </button>
         </form>
+         {submitError && (
+            <div className="submission-error">
+                <p><strong>Submission Failed!</strong></p>
+                <p>{submitError}</p>
+            </div>
+        )}
         </>
       )}
     </section>
@@ -1184,7 +1231,7 @@ const styles = `
 
   html {
     scroll-behavior: smooth;
-    font-size: 112.5%; /* Sets base font to 18px */
+    font-size: 100%; /* Sets base font to 16px */
     background-color: var(--background-color);
   }
 
@@ -1806,7 +1853,13 @@ const styles = `
       margin-top: 24px;
       transition: background-color 0.2s ease;
   }
-  .online-application-form button:hover, .online-application-form button:focus,
+  
+  .online-application-form button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+  }
+  
+  .online-application-form button:hover:not(:disabled), .online-application-form button:focus:not(:disabled),
   .payment-button:hover, .payment-button:focus {
       background-color: var(--link-hover-color);
   }
@@ -1836,6 +1889,20 @@ const styles = `
       border-radius: 4px;
       display: inline-block;
       margin-top: 16px;
+  }
+
+  .submission-error {
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 8px;
+    margin: 16px 0 0;
+  }
+
+  .submission-error p {
+      margin: 4px 0;
   }
 
   /* Added for About Us Page */
