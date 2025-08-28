@@ -610,12 +610,12 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Admissions</h2>
       {renderContent()}
@@ -627,12 +627,12 @@ const FacultyPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Faculty & Staff</h2>
       <section className="card">
@@ -651,12 +651,12 @@ const FacilitiesPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Facilities</h2>
       <section className="card">
@@ -676,12 +676,12 @@ const FeePaymentPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Fee Payment</h2>
       <section className="card">
@@ -738,12 +738,12 @@ const AcademicsPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Academics</h2>
       <section className="card">
@@ -795,12 +795,12 @@ const AboutUsPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">About Bethel Mission School, Champhai</h2>
       <section className="card">
@@ -888,12 +888,12 @@ const StudentSuppliesPage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Student Supplies</h2>
       <section className="card">
@@ -937,12 +937,12 @@ const StudentLifePage = ({ onBack }: PageProps) => {
   return (
     <main className="site-main admissions-page">
       <div className="page-nav-buttons">
-        <button onClick={onBack} className="back-button">
+        <a href="?page=home" className="back-button">
           &larr; Back
-        </button>
-        <button onClick={onBack} className="home-button">
+        </a>
+        <a href="?page=home" className="home-button">
           Home
-        </button>
+        </a>
       </div>
       <h2 className="page-title">Student Life</h2>
       
@@ -986,11 +986,22 @@ const StudentLifePage = ({ onBack }: PageProps) => {
 
 const App = () => {
   const navItems = ['Home', 'About', 'Academics', 'Admissions', 'Fees', 'Student Life', 'Facilities', 'Faculty', 'Supplies', 'Contact'];
+
+  const getInitialPage = () => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page');
+    const validPages = ['home', 'about-us', 'academics', 'admissions', 'faculty', 'facilities', 'fee-payment', 'student-supplies', 'student-life'];
+    if (page && validPages.includes(page)) {
+        return page;
+    }
+    return 'home';
+  };
+
   const [activeSection, setActiveSection] = useState('home');
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const [isCalendarModalOpen, setCalendarModalOpen] = useState(false);
   const [activeCalendarTab, setActiveCalendarTab] = useState<CalendarSection>('primary');
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState(getInitialPage());
 
   const slugify = (text: string) => text.toLowerCase().replace(/\s+/g, '-');
   
@@ -1005,6 +1016,15 @@ const App = () => {
 
   useEffect(() => {
     if (currentPage !== 'home') return;
+    
+    // Handle hash scrolling on initial load or page change to home
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -1058,54 +1078,45 @@ const App = () => {
     return items.map(item => {
       const slug = slugify(item);
       const pageName = pageItems[item];
+      const key = `${isFooter ? 'footer-' : ''}${item}`;
+      let href = '';
 
       if (pageName) {
-        return (
-          <li key={`${isFooter ? 'footer-' : ''}${item}`}>
-            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage(pageName); window.scrollTo(0, 0); }} className={currentPage === pageName ? 'active' : ''}>
-              {item}
-            </a>
-          </li>
-        );
+        href = `?page=${pageName}`;
       } else {
-        const handleScrollLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-          if (currentPage !== 'home') {
-            e.preventDefault();
-            setCurrentPage('home');
-            requestAnimationFrame(() => {
-              document.getElementById(slug)?.scrollIntoView({ behavior: 'smooth' });
-            });
-          }
-        };
-        return (
-          <li key={`${isFooter ? 'footer-' : ''}${item}`}>
-            <a href={`#${slug}`} onClick={handleScrollLinkClick} className={!isFooter && currentPage === 'home' && activeSection === slug ? 'active' : ''}>
-              {item}
-            </a>
-          </li>
-        );
+        href = slug === 'home' ? '?page=home' : `?page=home#${slug}`;
       }
+
+      return (
+        <li key={key}>
+          <a href={href} target="_blank" rel="noopener noreferrer" className={!isFooter && currentPage === 'home' && activeSection === slug ? 'active' : ''}>
+            {item}
+          </a>
+        </li>
+      );
     });
   };
 
   const renderPage = () => {
+    const handleBack = () => setCurrentPage('home');
+    
     switch (currentPage) {
       case 'about-us':
-        return <AboutUsPage onBack={() => setCurrentPage('home')} />;
+        return <AboutUsPage onBack={handleBack} />;
       case 'academics':
-        return <AcademicsPage onBack={() => setCurrentPage('home')} />;
+        return <AcademicsPage onBack={handleBack} />;
       case 'admissions':
-        return <AdmissionsPage onBack={() => setCurrentPage('home')} />;
+        return <AdmissionsPage onBack={handleBack} />;
       case 'faculty':
-        return <FacultyPage onBack={() => setCurrentPage('home')} />;
+        return <FacultyPage onBack={handleBack} />;
       case 'facilities':
-        return <FacilitiesPage onBack={() => setCurrentPage('home')} />;
+        return <FacilitiesPage onBack={handleBack} />;
       case 'fee-payment':
-        return <FeePaymentPage onBack={() => setCurrentPage('home')} />;
+        return <FeePaymentPage onBack={handleBack} />;
       case 'student-supplies':
-        return <StudentSuppliesPage onBack={() => setCurrentPage('home')} />;
+        return <StudentSuppliesPage onBack={handleBack} />;
       case 'student-life':
-        return <StudentLifePage onBack={() => setCurrentPage('home')} />;
+        return <StudentLifePage onBack={handleBack} />;
       default:
         return (
            <main className="site-main">
@@ -1122,7 +1133,7 @@ const App = () => {
               </section>
 
               <section id="contact" ref={el => { sectionsRef.current['contact'] = el; }} className="quick-links" aria-label="Quick Links">
-                <a href="#" className="card quick-link-card" role="button" onClick={(e) => { e.preventDefault(); setCurrentPage('fee-payment'); window.scrollTo(0, 0); }}>
+                <a href="?page=fee-payment" target="_blank" rel="noopener noreferrer" className="card quick-link-card" role="button">
                   <div>Fee Payment</div>
                 </a>
                 <a href="#" className="card quick-link-card" role="button" onClick={openCalendarModal}>
@@ -1149,17 +1160,17 @@ const App = () => {
                 <article id="about-us" ref={el => { sectionsRef.current['about-us'] = el; }} className="card">
                   <h3>About Us</h3>
                   <p>Discover our history, mission, and the values that guide us in providing a nurturing and excellent educational environment.</p>
-                  <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('about-us'); window.scrollTo(0, 0); }} className="read-more" style={{display: 'block', marginBottom: '24px'}}>Learn More About Us &raquo;</a>
+                  <a href="?page=about-us" target="_blank" rel="noopener noreferrer" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Learn More About Us &raquo;</a>
                 </article>
                 <article id="academics" ref={el => { sectionsRef.current['academics'] = el; }} className="card">
                   <h3>Academics</h3>
                   <p>Explore our curriculum, teaching methodologies, and evaluation systems designed to foster academic excellence.</p>
-                  <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('academics'); window.scrollTo(0, 0); }} className="read-more" style={{display: 'block', marginBottom: '24px'}}>Explore Academics &raquo;</a>
+                  <a href="?page=academics" target="_blank" rel="noopener noreferrer" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Explore Academics &raquo;</a>
                 </article>
                 <article id="student-life" ref={el => { sectionsRef.current['student-life'] = el; }} className="card">
                   <h3>Student Life</h3>
                   <p>Explore our vibrant student life, including clubs, sports, and leadership opportunities that help students grow beyond the classroom.</p>
-                  <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('student-life'); window.scrollTo(0, 0); }} className="read-more" style={{display: 'block', marginBottom: '24px'}}>Discover Student Life &raquo;</a>
+                  <a href="?page=student-life" target="_blank" rel="noopener noreferrer" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Discover Student Life &raquo;</a>
                 </article>
               </section>
           </main>
@@ -1176,7 +1187,7 @@ const App = () => {
       )}
       
       <header className="site-header">
-        <a href="#" className="logo-container" onClick={(e) => { e.preventDefault(); setCurrentPage('home'); }}>
+        <a href="?page=home" className="logo-container">
           <img src="https://i.postimg.cc/d7PLjvNv/image.png" alt="Bethel Mission School Logo" className="logo" />
           <div className="school-title">
             <h1 className="school-name">Bethel Mission School</h1>
@@ -1268,13 +1279,20 @@ const App = () => {
 
 const styles = `
   :root {
-    --background-color: #FAFAD2;
-    --text-color: #333;
-    --card-background: #ffffff;
-    --border-color: #eee;
-    --heading-color: #222;
-    --link-color: #555;
-    --link-hover-color: #000;
+    --background-color: #1a202c;
+    --text-color: #e2e8f0;
+    --card-background: #2d3748;
+    --border-color: #4a5568;
+    --heading-color: #48bb78;
+    --heading-hover-color: #38a169;
+    --link-color: #4299e1;
+    --link-hover-color: #63b3ed;
+    --success-color: #68d391;
+    --success-background: rgba(104, 211, 145, 0.1);
+    --warning-color: #f6e05e;
+    --warning-background: rgba(246, 224, 94, 0.1);
+    --error-color: #f56565;
+    --error-background: rgba(245, 101, 101, 0.1);
   }
   
   *, *::before, *::after {
@@ -1306,7 +1324,7 @@ const styles = `
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    opacity: 0.3;
+    opacity: 0.1;
     z-index: -1;
   }
 
@@ -1554,7 +1572,7 @@ const styles = `
   .map-link {
     display: inline-block;
     background-color: var(--heading-color);
-    color: var(--card-background);
+    color: var(--background-color);
     padding: 10px 16px;
     border-radius: 6px;
     text-decoration: none;
@@ -1566,8 +1584,8 @@ const styles = `
 
   .map-link:hover,
   .map-link:focus {
-      background-color: var(--link-hover-color);
-      color: var(--card-background);
+      background-color: var(--heading-hover-color);
+      color: var(--background-color);
       text-decoration: none;
   }
 
@@ -1707,7 +1725,7 @@ const styles = `
   .back-button:hover, .home-button:hover,
   .back-button:focus, .home-button:focus {
     background-color: var(--heading-color);
-    color: var(--card-background);
+    color: var(--background-color);
     border-color: var(--heading-color);
   }
   
@@ -1893,7 +1911,7 @@ const styles = `
       border-radius: 4px;
       font-family: inherit;
       font-size: 1rem;
-      background-color: #fff;
+      background-color: var(--background-color);
       color: var(--text-color);
   }
   .form-group textarea {
@@ -1902,7 +1920,7 @@ const styles = `
   }
   .online-application-form button, .payment-button {
       background-color: var(--heading-color);
-      color: var(--card-background);
+      color: var(--background-color);
       padding: 12px 20px;
       border: none;
       border-radius: 6px;
@@ -1914,26 +1932,27 @@ const styles = `
   }
   
   .online-application-form button:disabled {
-      background-color: #ccc;
+      background-color: var(--border-color);
+      color: #a0aec0;
       cursor: not-allowed;
   }
   
   .online-application-form button:hover:not(:disabled), .online-application-form button:focus:not(:disabled),
   .payment-button:hover, .payment-button:focus {
-      background-color: var(--link-hover-color);
+      background-color: var(--heading-hover-color);
   }
 
   .submission-success {
     text-align: center;
     padding: 40px 20px;
-    border: 1px solid #d4edda;
-    background-color: #f2fff5;
+    border: 1px solid var(--success-color);
+    background-color: var(--success-background);
     border-radius: 8px;
   }
   .submission-success h4 {
       margin: 0 0 16px;
       font-size: 1.5rem;
-      color: #155724;
+      color: var(--success-color);
   }
   .submission-success p {
       margin: 8px 0;
@@ -1942,8 +1961,8 @@ const styles = `
   .admission-id {
       font-weight: 700;
       font-size: 1.3rem;
-      color: #0c5460;
-      background-color: #d1ecf1;
+      color: var(--link-color);
+      background-color: rgba(66, 153, 225, 0.1);
       padding: 8px 16px;
       border-radius: 4px;
       display: inline-block;
@@ -1953,9 +1972,9 @@ const styles = `
   .submission-error {
     text-align: center;
     padding: 12px;
-    border: 1px solid #f5c6cb;
-    background-color: #f8d7da;
-    color: #721c24;
+    border: 1px solid var(--error-color);
+    background-color: var(--error-background);
+    color: var(--error-color);
     border-radius: 8px;
     margin: 16px 0 0;
   }
@@ -2036,7 +2055,7 @@ const styles = `
   }
   .supplies-table th {
     font-weight: 700;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
   }
   .supply-item-cell {
     display: flex;
@@ -2049,7 +2068,7 @@ const styles = `
     height: 60px;
     object-fit: contain;
     border-radius: 4px;
-    background-color: #f8f8f8;
+    background-color: var(--border-color);
     flex-shrink: 0;
   }
   .stock-status {
@@ -2061,16 +2080,16 @@ const styles = `
     display: inline-block;
   }
   .stock-status.in-stock {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: var(--success-background);
+    color: var(--success-color);
   }
   .stock-status.low-stock {
-    background-color: #fff3cd;
-    color: #856404;
+    background-color: var(--warning-background);
+    color: var(--warning-color);
   }
   .stock-status.out-of-stock {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: var(--error-background);
+    color: var(--error-color);
   }
 
   /* Fee Structure Table */
@@ -2091,7 +2110,7 @@ const styles = `
   }
   .fee-structure-table th {
     font-weight: 700;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
   }
 
 
@@ -2248,11 +2267,11 @@ const styles = `
   
   .calendar-table th {
     font-weight: 700;
-    background-color: #f9f9f9;
+    background-color: var(--background-color);
   }
 
   .calendar-table tbody tr:nth-child(even) {
-    background-color: #fcfcfc;
+    background-color: rgba(255, 255, 255, 0.05);
   }
 
   .calendar-table td:nth-child(1) {
