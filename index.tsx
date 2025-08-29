@@ -362,7 +362,7 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
   };
 
   const renderMainView = () => (
-    <section className="card">
+    <section className="card animate-on-scroll">
       <h3>Admission Information</h3>
       <ul>
         <li><a href="#" onClick={(e) => { e.preventDefault(); setAdmissionView('guidelines'); }}>Admission Guidelines</a></li>
@@ -375,7 +375,7 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
   );
 
   const renderGuidelinesView = () => (
-    <section className="card admission-details">
+    <section className="card admission-details animate-on-scroll">
       <button onClick={() => setAdmissionView('main')} className="back-button-inline">&larr; Back to Admissions</button>
       <div className="admission-header">
         <h3>Bethel Mission School, Champhai</h3>
@@ -413,7 +413,7 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
   );
   
   const renderFeeStructureView = () => (
-    <section className="card admission-details">
+    <section className="card admission-details animate-on-scroll">
       <button onClick={() => setAdmissionView('main')} className="back-button-inline">&larr; Back to Admissions</button>
       <h3>Fee Structure (2025)</h3>
       <p>Fees are payable on or before the 10th of every month. Late payment will attract a fine as per school policy. Uniforms, books, transport and activity fees are charged separately. Fees once paid are non-refundable.</p>
@@ -453,7 +453,7 @@ const AdmissionsPage = ({ onBack }: PageProps) => {
   );
 
   const renderOnlineFormView = () => (
-     <section className="card admission-details">
+     <section className="card admission-details animate-on-scroll">
       <button onClick={() => setAdmissionView('main')} className="back-button-inline">&larr; Back to Admissions</button>
       <h3>Online Application Form</h3>
 
@@ -635,7 +635,7 @@ const FacultyPage = ({ onBack }: PageProps) => {
         </a>
       </div>
       <h2 className="page-title">Faculty & Staff</h2>
-      <section className="card">
+      <section className="card animate-on-scroll">
         <h3>Our Team</h3>
         <ul>
           <li><a href="#">Teaching Staff Profiles</a></li>
@@ -659,7 +659,7 @@ const FacilitiesPage = ({ onBack }: PageProps) => {
         </a>
       </div>
       <h2 className="page-title">Facilities</h2>
-      <section className="card">
+      <section className="card animate-on-scroll">
         <h3>Our Facilities</h3>
         <ul>
           <li><a href="#">Classrooms & Labs</a></li>
@@ -684,7 +684,7 @@ const FeePaymentPage = ({ onBack }: PageProps) => {
         </a>
       </div>
       <h2 className="page-title">Fee Payment</h2>
-      <section className="card">
+      <section className="card animate-on-scroll">
         <h3>Online Fee Payment Portal</h3>
         <p>Please have your student's Admission ID or Registration Number ready before proceeding.</p>
         <p>Click the button below to be redirected to our secure payment gateway to complete the transaction.</p>
@@ -693,7 +693,7 @@ const FeePaymentPage = ({ onBack }: PageProps) => {
         </button>
       </section>
 
-      <section className="card" style={{ marginTop: '32px' }}>
+      <section className="card animate-on-scroll" style={{ marginTop: '32px' }}>
         <h3>Fee Structure</h3>
         <div className="fee-table-container">
           <table className="fee-structure-table">
@@ -746,7 +746,7 @@ const AcademicsPage = ({ onBack }: PageProps) => {
         </a>
       </div>
       <h2 className="page-title">Academics</h2>
-      <section className="card">
+      <section className="card animate-on-scroll">
         <h3>Academic Information</h3>
         <ul>
           <li><a href="#">Curriculum Details</a></li>
@@ -757,7 +757,7 @@ const AcademicsPage = ({ onBack }: PageProps) => {
         </ul>
       </section>
 
-      <section id="academic-calendar-section" className="card" style={{ marginTop: '32px', scrollMarginTop: '120px' }}>
+      <section id="academic-calendar-section" className="card animate-on-scroll" style={{ marginTop: '32px', scrollMarginTop: '120px' }}>
         <h3>Academic Calendar 2025-2026</h3>
         <div className="calendar-tabs">
           <button onClick={() => setActiveCalendarTab('primary')} className={activeCalendarTab === 'primary' ? 'active' : ''}>Primary</button>
@@ -803,7 +803,7 @@ const AboutUsPage = ({ onBack }: PageProps) => {
         </a>
       </div>
       <h2 className="page-title">About Bethel Mission School, Champhai</h2>
-      <section className="card">
+      <section className="card animate-on-scroll">
         <h3>Introduction</h3>
         <p>Founded in 1996, Bethel Mission School, Champhai has grown from a small mission initiative into a respected institution affiliated with the Mizoram Board of School Education (MBSE). We provide education from Nursery to Class X, guided by our motto “Service to God & men.”</p>
         <p>The administration of the school is managed by a private unaided body, ensuring independence in vision, management, and the pursuit of excellence. This autonomy allows us to adapt quickly to the needs of our students and community while maintaining high academic and moral standards.</p>
@@ -896,7 +896,7 @@ const StudentSuppliesPage = ({ onBack }: PageProps) => {
         </a>
       </div>
       <h2 className="page-title">Student Supplies</h2>
-      <section className="card">
+      <section className="card animate-on-scroll">
         <h3>Supplies Price List & Inventory</h3>
         <p>Below is the list of available student supplies, their prices, and current stock status. Items can be purchased at the school office.</p>
         <div className="supplies-table-container">
@@ -946,7 +946,7 @@ const StudentLifePage = ({ onBack }: PageProps) => {
       </div>
       <h2 className="page-title">Student Life</h2>
       
-      <section id="clubs-societies" className="card admission-details">
+      <section id="clubs-societies" className="card admission-details animate-on-scroll">
         <h3>🌱 Clubs & Societies</h3>
         
         <h4>🌿 Eco Club</h4>
@@ -970,12 +970,12 @@ const StudentLifePage = ({ onBack }: PageProps) => {
         </ul>
       </section>
 
-      <section id="sports-arts" className="card" style={{ marginTop: '32px' }}>
+      <section id="sports-arts" className="card animate-on-scroll" style={{ marginTop: '32px' }}>
           <h3>Sports & Arts</h3>
           <p>Information about sports teams, arts programs, and annual events will be available here soon.</p>
       </section>
 
-      <section id="student-council" className="card" style={{ marginTop: '32px' }}>
+      <section id="student-council" className="card animate-on-scroll" style={{ marginTop: '32px' }}>
           <h3>Student Council</h3>
           <p>Details about our student leadership body and their activities will be updated shortly.</p>
       </section>
@@ -1062,6 +1062,33 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+    if (elementsToAnimate.length === 0) return;
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    elementsToAnimate.forEach(el => observer.observe(el));
+
+    return () => {
+        elementsToAnimate.forEach(el => {
+            if (el) {
+                observer.unobserve(el);
+            }
+        });
+    };
+  }, [currentPage]);
+
 
   const renderNavLinks = (items: string[], isFooter = false) => {
     const pageItems: { [key: string]: string } = {
@@ -1122,7 +1149,7 @@ const App = () => {
            <main className="site-main">
               <h2 id="home" ref={el => { sectionsRef.current['home'] = el; }} className="page-title">Home</h2>
 
-              <section className="announcements card" aria-labelledby="announcements-title">
+              <section className="announcements card animate-on-scroll" aria-labelledby="announcements-title">
                 <h3 id="announcements-title">Latest News & Announcements</h3>
                 <div className="announcement-item">
                   <h4>Annual Sports Day 2024</h4>
@@ -1132,7 +1159,7 @@ const App = () => {
                 </div>
               </section>
 
-              <section id="contact" ref={el => { sectionsRef.current['contact'] = el; }} className="quick-links" aria-label="Quick Links">
+              <section id="contact" ref={el => { sectionsRef.current['contact'] = el; }} className="quick-links animate-on-scroll" aria-label="Quick Links">
                 <a href="?page=fee-payment" className="card quick-link-card" role="button">
                   <div>Fee Payment</div>
                 </a>
@@ -1156,7 +1183,7 @@ const App = () => {
                 </article>
               </section>
 
-              <section className="info-cards" aria-label="School Information">
+              <section className="info-cards animate-on-scroll" aria-label="School Information">
                 <article id="about-us" ref={el => { sectionsRef.current['about-us'] = el; }} className="card">
                   <h3>About Us</h3>
                   <p>Discover our history, mission, and the values that guide us in providing a nurturing and excellent educational environment.</p>
@@ -1368,6 +1395,11 @@ const styles = `
   .logo {
     height: 60px;
     width: auto;
+    transition: transform 0.6s ease-in-out;
+  }
+
+  .logo-container:hover .logo {
+    transform: rotate(360deg);
   }
 
   .school-title {
@@ -1499,10 +1531,13 @@ const styles = `
     font-weight: 700;
     color: var(--heading-color);
     text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s ease-out;
   }
   
   .read-more:hover {
     text-decoration: underline;
+    transform: translateX(4px);
   }
 
   .quick-links {
@@ -1942,6 +1977,22 @@ const styles = `
       background-color: var(--heading-hover-color);
   }
 
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(72, 187, 120, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(72, 187, 120, 0);
+    }
+  }
+
+  .payment-button {
+    animation: pulse 2s infinite;
+  }
+
   .submission-success {
     text-align: center;
     padding: 40px 20px;
@@ -2276,6 +2327,19 @@ const styles = `
 
   .calendar-table td:nth-child(1) {
     white-space: nowrap;
+  }
+
+  /* Animation Classes */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
   
   /* Responsive Design */
