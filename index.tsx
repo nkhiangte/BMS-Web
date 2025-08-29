@@ -1089,7 +1089,7 @@ const App = () => {
 
       return (
         <li key={key}>
-          <a href={href} target="_blank" rel="noopener noreferrer" className={!isFooter && currentPage === 'home' && activeSection === slug ? 'active' : ''}>
+          <a href={href} className={!isFooter && currentPage === 'home' && activeSection === slug ? 'active' : ''}>
             {item}
           </a>
         </li>
@@ -1133,7 +1133,7 @@ const App = () => {
               </section>
 
               <section id="contact" ref={el => { sectionsRef.current['contact'] = el; }} className="quick-links" aria-label="Quick Links">
-                <a href="?page=fee-payment" target="_blank" rel="noopener noreferrer" className="card quick-link-card" role="button">
+                <a href="?page=fee-payment" className="card quick-link-card" role="button">
                   <div>Fee Payment</div>
                 </a>
                 <a href="#" className="card quick-link-card" role="button" onClick={openCalendarModal}>
@@ -1144,12 +1144,12 @@ const App = () => {
                   <p>Call: <a href="tel:9862148342">9862148342</a> / <a href="tel:9612447703">9612447703</a></p>
                   <p>Email: <a href="mailto:bmschamphai@gmail.com">bmschamphai@gmail.com</a></p>
                   <p>Bethel Mission School, Bethel Veng,<br/>Champhai, 796321, Mizoram</p>
-                  <a href="https://maps.app.goo.gl/K6gvNPaJtpUbupp38?g_st=aw" target="_blank" rel="noopener noreferrer" className="map-link">View on Google Maps</a>
+                  <a href="https://maps.app.goo.gl/K6gvNPaJtpUbupp38?g_st=aw" rel="noopener noreferrer" className="map-link">View on Google Maps</a>
                   <div className="social-links">
-                    <a href="https://www.instagram.com/bms_champhai?igsh=MWFtdm9idW90NWlmcQ==" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <a href="https://www.instagram.com/bms_champhai?igsh=MWFtdm9idW90NWlmcQ==" rel="noopener noreferrer" aria-label="Instagram">
                       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
-                    <a href="https://youtube.com/@bethelmissionschoolchamphai?si=1P3McgnoZpPNB7gH" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                    <a href="https://youtube.com/@bethelmissionschoolchamphai?si=1P3McgnoZpPNB7gH" rel="noopener noreferrer" aria-label="YouTube">
                       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
                     </a>
                   </div>
@@ -1160,17 +1160,17 @@ const App = () => {
                 <article id="about-us" ref={el => { sectionsRef.current['about-us'] = el; }} className="card">
                   <h3>About Us</h3>
                   <p>Discover our history, mission, and the values that guide us in providing a nurturing and excellent educational environment.</p>
-                  <a href="?page=about-us" target="_blank" rel="noopener noreferrer" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Learn More About Us &raquo;</a>
+                  <a href="?page=about-us" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Learn More About Us &raquo;</a>
                 </article>
                 <article id="academics" ref={el => { sectionsRef.current['academics'] = el; }} className="card">
                   <h3>Academics</h3>
                   <p>Explore our curriculum, teaching methodologies, and evaluation systems designed to foster academic excellence.</p>
-                  <a href="?page=academics" target="_blank" rel="noopener noreferrer" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Explore Academics &raquo;</a>
+                  <a href="?page=academics" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Explore Academics &raquo;</a>
                 </article>
                 <article id="student-life" ref={el => { sectionsRef.current['student-life'] = el; }} className="card">
                   <h3>Student Life</h3>
                   <p>Explore our vibrant student life, including clubs, sports, and leadership opportunities that help students grow beyond the classroom.</p>
-                  <a href="?page=student-life" target="_blank" rel="noopener noreferrer" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Discover Student Life &raquo;</a>
+                  <a href="?page=student-life" className="read-more" style={{display: 'block', marginBottom: '24px'}}>Discover Student Life &raquo;</a>
                 </article>
               </section>
           </main>
